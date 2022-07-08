@@ -26,11 +26,13 @@ Sözleşmemizdeki fallback metotu receive() metodu. Require kısmındaki gerekli
 
     await contract.contribute({value: toWei("0.0001")});
 toWei metotu içine yazdığınız Ether değerini wei birimine çeviriyor. Eğer payable metotlarını çağırmak istiyorsanız wei ile işlem yapmalısınız. Contribute metodundaki require koşullarından birisi 0.001 Ether'den daha düşük bir miktar göndermekti, bu yüzden 0.0001 Ether göndermeyi tercih ettim. Evet, şimdi kendimizi sözleşme sahibi yapma zamanı!
+
     await contract.sendTransaction({value: toWei("0.0001")});
 
 Fallback metodundaki koşullardan ikincisini sağladık, diğeri ise sözleşmeye 0'dan fazla herhangi bir miktarda Ether göndermemizdi. Ve böylece yeni sözleşme sahibi biziz! Şimdi ise hasılatı toplama zamanı, yani fondaki Etherleri kendimize aktaralım.
     await contract.withdraw();
 Yazdığımız kodların sağlamasını yapmak için konsola şunu yazabilirsiniz:
+
     await contract.owner();
 
 Yukarıdaki kod sözleşmenin sahibini gösteriyor. Kendi adresinizi göremiyorsanız kodları doğru yazdığınızdan emin olun.
