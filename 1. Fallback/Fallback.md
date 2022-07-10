@@ -12,7 +12,7 @@ Fallback sözleşmesini incelemeden önce bu seviyeyi geçmek için neler yapmam
 
 Evet, şimdi gelelim Fallback metotlarına. Eğer sözleşmeye gönderdiğiniz işlemde (transaction) kontrattaki herhangi bir fonksiyonu kullandığınızı belirten bir veri yoksa veya işleminizde hiç veri barındırmıyorsa fallback metodumuz devreye girer. Fallback metotları **external** ve **payable** olarak belirtilmelidir. Sözleşmemizde fallback metotlarını belirtmenin birden fazla yolları var.
 
-Bu yollardan bir tanesi ve Ethernaut sözleşmemizde de kullanılan **receive() external payable** ifadesidir. Sözleşmemizin yazıldığı ve derlendiği Solidity v0.6.0'e (versiyonu belirtme sebebimi aşağıda açıklayacağım) göre bahsi geçen fallback metodu, sözleşmeye gönderdiğimiz işlemde herhangi bir veri (call data) yoksa çağrılır. Call data sözleşmeden çağırmak istediğimiz metotun verisidir. Call data'nın olmaması ise şu demek: MetaMask'ı açıp Send butonuna basarsanız ve sözleşme adresine bir miktar Ether gönderdiğiniz zaman basit bir transfer işlemi gerçekleşir. Bu transfer işleminde call data bulunmaz, işte burada receive metotu devreye giriyor.
+Bu yollardan bir tanesi ve Ethernaut sözleşmemizde de kullanılan **receive() external payable** ifadesidir. Sözleşmemizin yazıldığı ve derlendiği Solidity v0.6.0'e göre bahsi geçen fallback metodu, sözleşmeye gönderdiğimiz işlemde herhangi bir veri (call data) yoksa çağrılır. Call data sözleşmeden çağırmak istediğimiz metotun verisidir. Call data'nın olmaması ise şu demek: MetaMask'ı açıp Send butonuna basarsanız ve sözleşme adresine bir miktar Ether gönderdiğiniz zaman basit bir transfer işlemi gerçekleşir. Bu transfer işleminde call data bulunmaz, işte burada receive metotu devreye giriyor.
 
 Diğer yol ise **fallback() external [payable]** ifadesidir. Eğer sözleşmeye gönderdiğiniz işlem call data'sında sözleşmede bulunmayan bir metoda ait veriler bulunuyorsa fallback metodu devreye giriyor. Payable kısmı opsiyoneldir.
 
@@ -37,7 +37,7 @@ Yazdığımız kodların sağlamasını yapmak için konsola şunu yazabilirsini
 
 Yukarıdaki kod sözleşmenin sahibini gösteriyor. Kendi adresinizi göremiyorsanız kodları doğru yazdığınızdan emin olun.
 
-Bütün bunları yaptıktan sonra **Submit Instance** butonuna basıp seviyeyi geçtiğimizi Ethernaut sözleşmesine bildirelim. Seviyeyi geçmeniz halinde konsolda ışıklı bir gösteri mesajını görmek için konsolu açık tutmanızı tavsiye ederim. Bir sonraki seviyede görüşmek üzere!
+Bütün bunları yaptıktan sonra **Submit Instance** butonuna basıp seviyeyi geçtiğimizi Ethernaut sözleşmesine bildirelim. Seviyeyi geçmeniz halinde konsolda ışıklı bir tebrik mesajını görmek için konsolu açık tutmanızı tavsiye ederim. Bir sonraki seviyede görüşmek üzere!
 
 
 
