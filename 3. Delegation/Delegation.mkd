@@ -1,0 +1,30 @@
+#Delegation
+
+Bu yazıda, Ethernaut'un başka bir seviyesi olan Delegation'ı inceleyeceğiz. Seviyeyi görüntülemek için [buraya](https://ethernaut.openzeppelin.com/level/0x9451961b7Aea1Df57bc20CC68D72f662241b5493) tıklayabilirsiniz. Delegation sözleşmesinde tespit edeceğimiz zaafiyet oldukça önemli çünkü Parity cüzdanının hacklenmesine ve yaklaşık 150,000 Ether'in çalınmasına sebep olmuştur. İlgilenenler için saldırganın Ethereum adresini ve saldırı işlemlerini [buraya](https://etherscan.io/address/0xb3764761e297d6f121e79c32a65829cd1ddb4d32#internaltx) bırakıyorum. Geçmişten ders alalım ki gelecekte de benzer hataları yapmayalım!
+
+Delegation seviyesinde bizden beklenen Delegation sözleşmesinin sahipliğini ele geçirmek. Seviyeyi geçmemizde yardımcı olacak konseptleri de aşağıya bırakıyorum (çözümü okumadan önce kendiniz araştırmanız çok faydalı olabilir):
+
+ 1. Solidity dokümantasyonlarından **delegatecall** metodunun çalışma prensiplerini, on-chain kütüphanelerin delege işlemlerini nasıl gerçekleştirdiğini ve bu metodun uygulanma kapsamındaki sonuçlarının ne olduğunu araşıırabilirsiniz.
+ 2. Fallback metotları. Bunun için ilk dosyamıza da bakabilirsiniz.
+ 3. Metot id'leri.
+
+Delegatecall metodunun ne olduğunu öğrenerek başlayalım. Delegatecall metodu başka bir sözleşmeden ya da kütüphaneden metot çağırmak istediğimizde kullanılır. Ethernaut'un websitesindeki sözleşmelerin koduna bakarsanız, iki adet sözleşme tanımlanmış: biri Delegate diğeri ise Delegation. Delegate sözleşmesi, Rinkeby Testnet'te mevcut bir sözleşme, biz yayımlamıyoruz (deploy). Bizim yayımladığımız sözleşme Delegation sözleşmesi ve constructor metodunda gördüğünüz _delegateAddress parametresini Ethernaut sözleşmesi sağlıyor. Delegate sözleşmesini kütüphane olarak düşünebilirsiniz çünkü Delegation sözleşmesindeki fallback metodunun ilk satırında X adresindeki Delegate sözleşmesinin **msg.data** kısmında belirtilen metodunu çağrıyor. Msg.data, işlemdeki (transaction) calldata'yı içeren kısımdır. Calldata ise işlemi gönderdiğimiz sözleşmedeki çağırmak istediğimiz metotların bir nevi kodlu hali (metot id'si işte bu oluyor), kodlanması Ethereum Sanal Makinesi'nin anlamlandırabileceği şekilde gerçekleşir. Yani, fallback metoduna gönderdiğimiz işlemin data kısmına sağladığımız metot id'si ile Delegate sözleşmesi adresindeki metot id'siyle aynı olan metot çağrılır. Burası anlaşıldıysa delegatecall metodunun sözleşmenin storage değişkenleri için ne gibi sonuçları olduğunu öğrenelim.
+
+Delegatecall metodunda çağırdığımız Delegate sözleşmesinde çağırabileceğimiz tek metot bulunmakta: pwn() metodu. pwn metodunda owner değişkeni işlemi gönderen adrese eşitleniyor, storage değişkeni olan owner'ın adres değeri ise böylece değişiyor. Peki, Delegation sözleşmesinde çağırdığımız bu metotta gerçekleşen owner değişkeninin güncellenmesi Delegate sözleşmesinde mi gerçekleşir, Delegation sözleşmesinde mi? Cevap: Delegation sözleşmesinde. Yani, Delegation sözleşmesinin fallback metotuna göndereceğimiz işlem gönderirsek ve bu işlemin data kısmına pwn() metodunun metot id'sini de dahil edersek, Delegation sözleşmesindeki owner değişkenini değiştirebiliriz. Delegatecall metodunun çalışma prensibini anladıysak gelin metot id'ler neymiş ve pwn() metodunun id'sini nasıl bulabiliriz öğrenelim!
+
+**Kısa bir not**: Delegation sözleşmesindeki owner değişkeninin değişmesinin sebebi Delegate sözleşmesindeki pwn metodundaki değişen değişkenin isminin de owner olması değil. Eğer Delegate sözleşmesi farklı bir isimde değişken kullansaydı da Delegation sözleşmesindeki owner değişkeninin verisi değişirdi. Solidity akıllı sözleşmelerinde storage yapısının delegatecall tarafından nasıl etkilendiğini merak ediyorsanız bu dosyadaki Storage.sol kodunu açıp notlarımı okuyabilirsiniz.
+
+Bir sözleşmedeki metotların id'sini bulmak için web3.js kütüphanesi kullanabiliriz:
+
+    const method_id = web3.eth.abi.encodeFunctionSignature("pwn()");
+
+Konsola method_id yazarsanız pwn() metodunun kodlu hali veya metot id'si 0xdd365b8b değeridir. Kütüphaneleri kullanarak yapıyoruz ama kütüphanede hangi kod çalıştırılıyor diye soracak olursanız, gelin onu da öğrenelim. Metot ismini keccak256 hash metotundan geçirip 4 byte'lık bir veri oluşturuyoruz. Solidity'de bunu yapabilirsiniz. Bu dosyada Function.sol adlı belgeyi açarsanız ve Remix IDE'de sözleşmeyi yayımlarsanız web3.js kütüphanesiyle aynı sonucu alırsınız. Method id'yi de öğrendiğimize göre gelin Delegation sözleşmesinin fallback metoduna calldata kısmına method id'yi ekleyecek şekilde işlem göndereceğimizi öğrenelim.
+
+Fallback metodunun çağrılabilmesi için sözleşmeye işlem gönderirken herhangi bir metodu çağırmamamız lazım. Gelin bunu nasıl yaptığımızı öğrenelim (Fallback yazısında da bunu öğrendik):
+
+    await contract.sendTransaction({data: method_id});
+
+Böylece, Delegate sözleşmesindeki pwn() metodu çağrıldı, metot içinde gerçekleşen değişkenin güncellenmesi Delegate sözleşmesinde değil, Delegation sözleşmesinde gerçekleşti. Owner değişkeni, işlemi gönderen kişinin (msg.sender) adresiyle güncellendiği için artık Delegation sözleşmesinin sahibiyiz! Seviyeyi tamamlamak için **Submit Instance** butonuna basalım. 
+
+Delegatecall kullanırken hangi sözleşmenin hangi metodunu çağırdığımızdan emin olmalıyız. Metotlarda gerçekleşen değişken güncellemelerini iyice öğrenelim. Delegatecall metodunun sözleşmelerde sebep olduğu storage yapısının değişimini daha ayrıntılı öğrenmek isterseniz, Storage.sol koduna bakmanızı tavsiye ederim. Bir sonraki seviyede görüşmek üzere!
+
