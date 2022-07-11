@@ -1,4 +1,4 @@
-#Delegation
+# Delegation
 
 Bu yazıda, Ethernaut'un başka bir seviyesi olan Delegation'ı inceleyeceğiz. Seviyeyi görüntülemek için [buraya](https://ethernaut.openzeppelin.com/level/0x9451961b7Aea1Df57bc20CC68D72f662241b5493) tıklayabilirsiniz. Delegation sözleşmesinde tespit edeceğimiz zaafiyet oldukça önemli çünkü Parity cüzdanının hacklenmesine ve yaklaşık 150,000 Ether'in çalınmasına sebep olmuştur. İlgilenenler için saldırganın Ethereum adresini ve saldırı işlemlerini [buraya](https://etherscan.io/address/0xb3764761e297d6f121e79c32a65829cd1ddb4d32#internaltx) bırakıyorum. Geçmişten ders alalım ki gelecekte de benzer hataları yapmayalım!
 
