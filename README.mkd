@@ -1,0 +1,14 @@
+# TR-Ethernaut
+
+Hepiniz TR-Ethernaut'a hoşgeldiniz! Burada akıllı sözleşme hackleme oyunu olan Ethernaut'un bazı seviyelerinin Türkçe çözümlerini bulabilirsiniz.Akıllı sözleşme güvenliği üzerine Türkçe içeriklerin zenginleşmesi adına böyle bir girişimde bulundum, umarım herkese faydalı olur. İçeriklerde yanlış yazıma veya hatalı bilgiye rastlamanız halinde pull request ya da issue oluşturursanız çok memnun olurum. İyi çalışmalar diliyorum.
+
+ Ethernaut'a başlamadan ve içerikleri okumaya başlamadan önce bazı gereksinimlerden bahsetmeliyim:
+
+ 1. Öncelikle tarayıcınıza MetaMask cüzdanı indirmelisiniz. Cüzdanınızı yeni indirdiyseniz 12 kelimelik şifrenizi güvenli bir yerde saklayınız.
+ 2. Test ağlarını aktif etmemiz lazım. MetaMask'i açıp sağ yukarıdaki profil avatarınıza tıklayıp Ayarlar'ı/Settings açınız. Gelişmiş/Advanced kısmına gelip test ağlarını aktif edelim.
+ 3. Sağ yukarıdaki profil avatarının solundaki seçili ağ kısmına tıklayalım ve **Rinkeby Test Network** ağını seçelim.
+ 4. [Chainlink Faucet](https://faucets.chain.link/rinkeby) websitesine gidip MetaMask cüzdanımızı bağlayalım. 0.1 Rinkeby Test Ether'i alacağız. Test Ether'i olmadan Rinkeby ağında işlem yapamayız ve Ethernaut'taki seviyeleri geçemeyiz.
+
+Seviyeleri geçmek için tarayıcımızın konsolunu kullanacağız. Konsolu açmak için tarayıcının üstüne sağ tıklayıp Inspect/İncele kısmına tıklayalım. Sayfanın sağında çıkan bölmenin yukarısında sekmeler var, Console sekmesine tıklayalım. Kısaca Ctrl+Shift+J (Windows/Linux) veya Cmd+Opt+J (Mac) yaparak da konsola erişebilirsiniz.
+
+Herhangi bir sorunuz olursa bana GitHub profilimdeki iletişim bilgilerimden ulaşabilirsiniz. Sizi Ethernaut seviyeleriyle baş başa bırakıyorum, kolay gelsin!
