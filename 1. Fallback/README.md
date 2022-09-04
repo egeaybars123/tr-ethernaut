@@ -8,7 +8,7 @@ Fallback sözleşmesini incelemeden önce bu seviyeyi geçmek için neler yapmam
  3. toWei/fromWei metotlarını kullanarak ether ve wei birim dönüşümlerini yapmak Tarayıcınızın konsoluna **help()** komutunu yazarak bu metotlar hakkında bilgi alabilirsiniz.
  4. Fallback metotları.
 
-Öncelikle bu ABI (Application Binary Interface) neymiş onu öğrenelim. Öncelikle Ethereum üzerinde sözleşmelerinizi yayımlarken sözleşme adresinizle bytecode ilişkilendirilir ve Ethereum'da depolanır. Peki soracaksınız bu bytecode da ne? Bytecode, sizin Solidity dilinde yazdığınız kodun derlenmesi sonucu oluşur ve makinelerin, Ethereum Sanal Makinesi'nin anlayabileceği bir dildir. Gelin size basit bir sözleşmenin bytecode'unu göstereyim, aranızda anlayabilen çıkar belki: 0x600a600c600039600a6000f3602a60805260206080f3. Bizim, Ethereum'da depolanan bytecode ile etkileşime websitelerde ve uygulamalarda geçebilmemiz için ABI'ye ihtiyaç duyuyoruz. ABI'de, sözleşmedeki metotları ve değişken tanımları hakkında bilgiler bulunur ve EVM'e bytecode'daki hangi kısımları kullanacağımızın bilgisi verilir. **Get New Instance** butonuna basarak sözleşme seviyesini yayımladıktan sonra tarayıcınızın konsoluna **contract.abi** yazarsanız Fallback sözleşmesinin ABI'sini görüntüleyebilirsiniz.
+Öncelikle bu ABI (Application Binary Interface) neymiş onu öğrenelim. Öncelikle Ethereum üzerinde sözleşmelerinizi yayımlarken sözleşme adresinizle bytecode ilişkilendirilir ve Ethereum'da depolanır. Peki soracaksınız bu bytecode da ne? Bytecode, sizin Solidity dilinde yazdığınız kodun derlenmesi sonucu oluşur ve makinelerin, Ethereum Sanal Makinesi'nin anlayabileceği bir dildir. Gelin size basit bir sözleşmenin bytecode'unu göstereyim: 0x600a600c600039600a6000f3602a60805260206080f3. Bizim, Ethereum'da depolanan bytecode ile etkileşime websitelerde ve uygulamalarda geçebilmemiz için ABI'ye ihtiyaç duyuyoruz. ABI'de, sözleşmedeki metotları ve değişken tanımları hakkında bilgiler bulunur ve EVM'e bytecode'daki hangi kısımları kullanacağımızın bilgisi verilir. **Get New Instance** butonuna basarak sözleşme seviyesini yayımladıktan sonra tarayıcınızın konsoluna **contract.abi** yazarsanız Fallback sözleşmesinin ABI'sini görüntüleyebilirsiniz.
 
 Evet, şimdi gelelim Fallback metotlarına. Eğer sözleşmeye gönderdiğiniz işlemde (transaction) kontrattaki herhangi bir fonksiyonu kullandığınızı belirten bir veri yoksa veya işleminizde hiç veri barındırmıyorsa fallback metodumuz devreye girer. Fallback metotları **external** ve **payable** olarak belirtilmelidir. Sözleşmemizde fallback metotlarını belirtmenin birden fazla yolları var.
 
@@ -36,6 +36,10 @@ Yazdığımız kodların sağlamasını yapmak için konsola şunu yazabilirsini
     await contract.owner();
 
 Yukarıdaki kod sözleşmenin sahibini gösteriyor. Kendi adresinizi göremiyorsanız kodları doğru yazdığınızdan emin olun.
+
+Kontratın sahibi olduğumuza göre şimdi kontrattaki Ether'leri çekebilme yetkisine sahibiz. Hadi Etherlerimizi çekelim ve seviyeyi tamamlayalım!
+
+    await contract.withdraw();
 
 Bütün bunları yaptıktan sonra **Submit Instance** butonuna basıp seviyeyi geçtiğimizi Ethernaut sözleşmesine bildirelim. Seviyeyi geçmeniz halinde konsolda ışıklı bir tebrik mesajını görmek için konsolu açık tutmanızı tavsiye ederim. Bir sonraki seviyede görüşmek üzere!
 
