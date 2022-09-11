@@ -3,13 +3,13 @@ Ethernaut'un beşinci seviyesi olan Token sözleşmesiyle devam edelim. Bu seviy
 
 Eğer ilk çözdüğümüz seviyeyi hatırlıyorsanız, OpenZeppelin'in SafeMath kütüphanesinin kullanıldığının görmüşsünüzdür. Solidity'de dört işlem yapabildiğimiz halde neden bir dört işlem kütüphanesini kullanalım, ne gerek var? İşte bu seviyede Solidity'de akıllı sözleşme yazarken dört işlem kullanmanın yaratabileceği zaafiyetleri ve SafeMath kütüphanesinin önemini öğreneceğiz. Başlamadan önce bir noktadan bahsetmek istiyorum. Bu Ethernaut seviyesi Solidity v0.6.0'a göre yazılmış ve derlenmiş (compiled). Bu seviyedeki zaafiyet Solidity v0.8.0'e göre bir sorun yaşamadan revert (iptal) ediliyor ve güvenlik sorunu yaşanmıyor. 0.8.0 versiyonundan düşük versiyonlar kullanıyorsanız bu seviye, sözleşmenizin güvenliği için önemli olabilir. O zaman hadi başlayalım!
 
-Seviyeyi tamamlamak için başlangıçta sözleşmede bize verilen 20 tokenlik bakiyemizi arttırmak, tercihen çok yüksek miktarda arttırabiliriz. Peki, bunu nasıl başarabiliriz? Gelin sözleşmeyi inceleyim!
+Seviyeyi tamamlamak için başlangıçta sözleşmede bize verilen 20 tokenlik bakiyemizi arttırmalıyız (tercihen yüksek miktarda). Peki, bunu nasıl başarabiliriz? Gelin sözleşmeyi inceleyim!
 
 Token sözleşmesi basit bir token sözleşmesi; yani her adresin bakiyesi bulunur ve bakiyeleri kadar başka adreslere transfer yapabilirler. **Get New Instance** butonuna basıp sözleşme seviyesini yayımlayalım (deploy). Bakiyemizi kontrol etmek için şu kodu yazabiliriz:
 
     await contract.balanceOf(player);
 
-Player değişkeni Ethernaut websitesine MetaMask aracılığıyla bağladığımız Ethereum adresimiz. Gelen çıktıdaki words anahtarına tıklarsanız sıfırıncı indexte 20 sayısını göreceksiniz. Evet, 20 tokenimiz varmış ve biz elimizdeki token sayısını nasıl arttırabiliriz? Gelin transfer() metodunu inceleyelim.
+Player değişkeni Ethernaut websitesine MetaMask aracılığıyla bağladığımız Ethereum adresimiz. Gelen çıktıdaki "words" anahtarına tıklarsanız sıfırıncı indexte 20 sayısını göreceksiniz. Evet, 20 tokenimiz varmış ve biz elimizdeki token sayısını nasıl arttırabiliriz? Gelin transfer() metodunu inceleyelim.
 
 Transfer metodunda tokenlerimizi göndermek istediğimiz adresi ve miktarı parametre olarak sağlıyoruz. Metodun ilk satırında bakiyemiz kadar transfer yapıp yapmadığımızın kontrolü yapılıyor fakat yapılan çıkarma işleminde SafeMath kütüphanesi kullanılmıyor. Gelin bakalım buradaki zaafiyet neymiş öğrenelim!
 

@@ -22,7 +22,7 @@ contract Fallback {
         _;
     }
 
-  function contribute() public payable {
+  function contribute() external payable {
     require(msg.value < 0.001 ether);
     contributions[msg.sender] += msg.value;
     if (contributions[msg.sender] > contributions[owner]) {
@@ -38,8 +38,15 @@ contract Fallback {
     payable(owner).transfer(address(this).balance);
   }
 
-  receive() external payable {
+  receive() external payable { //1 wei
+    //msg.data yok.
+    //msg.value var.
     require(msg.value > 0 && contributions[msg.sender] > 0);
     owner = msg.sender;
+  }
+
+  fallback() external {
+    //msg.data var.
+    //msg.value olmak zorunda değil.
   }
 }
