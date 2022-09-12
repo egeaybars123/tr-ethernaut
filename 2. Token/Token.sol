@@ -11,8 +11,8 @@ contract Token {
   }
 
   function transfer(address _to, uint _value) public returns (bool) {
-    require(balances[msg.sender] - _value >= 0);
-    balances[msg.sender] -= _value;
+    require(balances[msg.sender]  - _value >= 0); //20-21 = max sayı
+    balances[msg.sender] -= _value; //2^256 - 1, minimum sayı = 0
     balances[_to] += _value;
     return true;
   }
@@ -21,3 +21,7 @@ contract Token {
     return balances[_owner];
   }
 }
+
+//Kilometre sayacı (4 haneli):
+//9999 -> 0000
+//Integer underflow-overflow.
