@@ -14,7 +14,7 @@ contract Delegate {
   }
 }
 
-//The contract below is trying to be hacked by making a delegate call to the above contract.
+//Aşağıdaki kontrat yukarıdaki kontrata delegatecall çağrısı yapılarak hacklenmeye çalışılıyor.
 contract Delegation {
 
   address public owner;

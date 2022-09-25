@@ -52,7 +52,7 @@ c ve owner değişkenleri nasıl etkilenecek? Gelin öğrenelim!
 Bir Solidity akıllı sözleşmesinde veri yapılarını depolamak için slotlar bulunur. Toplam 2^256 adet
 slot bulunur; 0'dan başlanır 2^256 -1'e kadar devam eder. Her bir slot 32 byte'lık veri depolayabilir.
 Mesela, adresler 20 byte'lık, uint256 ise 32 byte'lık veri depolar. Sözleşmede en üste yazılan değişken
-0. slottan başlar ve değişkeni bölmeyecek şekildeveri32 byte'lık slotu dolduracak şekilde diğer slotlara 
+0. slottan başlar ve değişkeni bölmeyecek şekilde veri32 byte'lık slotu dolduracak şekilde diğer slotlara 
 yazılır. Örneğin; Delegate sözleşmesinde 0. slotta a adresi var, 20 bytelık yer kaplıyor. Fakat b adresi
 0. slota yazılmaz, 1. slottan başlanır çünkü ikisi de 40 bytelık alan kaplıyor. a değişkeninden sonra 8 
 byte'lık bir değişken tanımlasaydık, bu değişken 0. slota yazılırdı ve b değişkeni yine 1. slottan devam 

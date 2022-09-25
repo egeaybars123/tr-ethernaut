@@ -4,7 +4,7 @@ Bu yazıda, Ethernaut'un başka bir seviyesi olan Delegation'ı inceleyeceğiz. 
 
 Delegation seviyesinde bizden beklenen Delegation sözleşmesinin sahipliğini ele geçirmek. Seviyeyi geçmemizde yardımcı olacak konseptleri de aşağıya bırakıyorum (çözümü okumadan önce kendiniz araştırmanız çok faydalı olabilir):
 
- 1. Solidity dokümantasyonlarından **delegatecall** metodunun çalışma prensiplerini, on-chain kütüphanelerin delege işlemlerini nasıl gerçekleştirdiğini ve bu metodun uygulanma kapsamındaki sonuçlarının ne olduğunu araşıırabilirsiniz.
+ 1. Solidity dokümantasyonlarından **delegatecall** metodunun çalışma prensiplerini, on-chain kütüphanelerin delege işlemlerini nasıl gerçekleştirdiğini ve bu metodun uygulanma kapsamındaki sonuçlarının ne olduğunu araştırabilirsiniz.
  2. Fallback metotları. Bunun için ilk dosyamıza da bakabilirsiniz.
  3. Metot id'leri.
 
